@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
 const seedUser = async () => {
@@ -5,10 +6,11 @@ const seedUser = async () => {
     const existing = await User.findOne({ where: { email: 'admin@example.com' } });
 
     if (!existing) {
+      const hashedPassword = await bcrypt.hash('admin123', 10);
       await User.create({
         username: 'admin',
         email: 'admin@example.com',
-        password: 'admin123',
+        password: hashedPassword,
       });
       console.log('Default user created!');
     } else {
