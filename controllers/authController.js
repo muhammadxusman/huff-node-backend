@@ -13,9 +13,20 @@ exports.loginUser = async (req, res) => {
       return res.status(404).json({ message: 'Invalid credentials' });
     }
 
+    // Check if password matches
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Check if user is active
+    if (user.status !== 'active') {
+      return res.status(403).json({ message: 'Your account is inactive' });
+    }
+
+    // Check if user is admin
+    if (user.role !== 'admin') {
+      return res.status(403).json({ message: 'You are not authorized' });
     }
 
     const payload = {
@@ -28,9 +39,9 @@ exports.loginUser = async (req, res) => {
       expiresIn: process.env.JWT_EXPIRES_IN || '1d',
     });
 
-    res.status(200).json({ token });
+    return res.status(200).json({ token });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ message: 'Server error' });
+    return res.status(500).json({ message: 'Server error' });
   }
 };
