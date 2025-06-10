@@ -14,7 +14,12 @@ const userRoutes = require('./routes/user');
 app.use('/api', userRoutes);
 
 const authRoutes = require('./routes/auth'); 
-app.use('/api', authRoutes);                    
+app.use('/api', authRoutes);  
+
+
+const trainerRoutes = require('./routes/coachesClassesRoutes');
+app.use('/api', trainerRoutes);
+
 
 const startApp = async () => {
   try {

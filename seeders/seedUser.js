@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const User = require('../models/User');
+const {User} = require('../models/index');
 
 const seedUser = async () => {
   try {
@@ -25,7 +25,7 @@ const seedUser = async () => {
 
     process.exit();
   } catch (err) {
-    console.error('❌ Seeding error:', err);
+    console.error('Seeding error:', err);
     process.exit(1);
   }
 };

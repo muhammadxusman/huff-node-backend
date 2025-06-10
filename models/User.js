@@ -43,4 +43,23 @@ const User = sequelize.define('User', {
   timestamps: true,
 });
 
+// Associations will be added in associate method
+User.associate = (models) => {
+  // A Trainer can have many Trainees
+  User.belongsToMany(User, {
+    as: 'Trainees',
+    through: models.CoachesClasses,
+    foreignKey: 'trainerId',
+    otherKey: 'traineeId',
+  });
+
+  // A Trainee can have many Trainers
+  User.belongsToMany(User, {
+    as: 'Trainers',
+    through: models.CoachesClasses,
+    foreignKey: 'traineeId',
+    otherKey: 'trainerId',
+  });
+};
+
 module.exports = User;

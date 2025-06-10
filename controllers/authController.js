@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const {User} = require('../models/index');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
@@ -25,7 +25,7 @@ exports.loginUser = async (req, res) => {
     }
 
     // Check if user is admin
-    if (user.role !== 'admin') {
+    if (user.role !== 'admin' && user.role !== 'trainer') {
       return res.status(403).json({ message: 'You are not authorized' });
     }
 
@@ -33,6 +33,7 @@ exports.loginUser = async (req, res) => {
       userId: user.id,
       username: user.username,
       email: user.email,
+      role: user.role,
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
