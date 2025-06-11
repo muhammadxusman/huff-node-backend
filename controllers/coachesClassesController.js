@@ -38,3 +38,20 @@ exports.assignTrainerToTrainee = async (req, res) => {
     return res.status(500).json({ message: 'Server error' });
   }
 };
+
+exports.getAllTrainers = async (req, res) => {
+  try {
+    const trainers = await User.findAll({
+      where: { role: 'trainer' },
+      attributes: { exclude: ['password'] }, // Hide password field
+    });
+
+    return res.status(200).json({
+      message: 'Trainers retrieved successfully',
+      data: trainers,
+    });
+  } catch (error) {
+    console.error('Error fetching trainers:', error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};

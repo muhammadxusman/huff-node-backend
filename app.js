@@ -4,7 +4,18 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors(
+  {
+    origin: 'http://localhost:5173', // Adjust this to your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true, // Allow cookies to be sent
+  },
+  {
+    origin: 'http://172.17.10.70:5173', // Adjust this to your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true, // Allow cookies to be sent
+  }
+));
 app.use(express.json());
 
 app.get('/', (req, res) => {
