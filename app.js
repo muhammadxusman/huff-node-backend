@@ -3,7 +3,8 @@ const { connectDB } = require('./config/db');
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5000;
-
+const trainerRoutes = require('./routes/coachesClassesRoutes');
+const workoutRoutes = require('./routes/workoutRoutes');
 app.use(cors(
   {
     origin: 'http://localhost:5173', // Adjust this to your frontend URL
@@ -28,8 +29,9 @@ const authRoutes = require('./routes/auth');
 app.use('/api', authRoutes);  
 
 
-const trainerRoutes = require('./routes/coachesClassesRoutes');
 app.use('/api', trainerRoutes);
+
+app.use('/api', workoutRoutes);
 
 
 const startApp = async () => {

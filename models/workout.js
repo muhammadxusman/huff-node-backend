@@ -14,7 +14,6 @@ const Workout = sequelize.define('Workout', {
   name: {
     type: DataTypes.STRING, // e.g., "Inclined Bench Press"
     allowNull: false,
-    unique: true,
   },
   short_description: {
     type: DataTypes.TEXT,
